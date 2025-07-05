@@ -95,7 +95,7 @@ namespace CourseRegisteration
 
         }
 
-        public void RegisterAddStudentToCourse()
+        public void RegisterStudentToCourse()
         {
             Console.WriteLine("Enter student ID: ");
             int sid = int.Parse(Console.ReadLine());
@@ -103,7 +103,7 @@ namespace CourseRegisteration
             int cid = int.Parse(Console.ReadLine());
             int sIndex = Students.FindIndex(x => x.ID == sid);
             int Cindex = Courses.FindIndex(x => x.CourseID == cid);
-            if (sIndex > 0 && Cindex > 0)
+            if (sIndex >= 0 && Cindex >= 0)
             {
                 registration[sIndex, Cindex] = true;
                 Console.WriteLine("Registration successfully!");
@@ -132,21 +132,89 @@ namespace CourseRegisteration
             }
         }
 
-        public void DisplayAllRegistrations()
+        public void DisplayRegistrations()
         {
-            for (int i = 0; i < Students.Count; i++)
+            for (int i = 0; i < Students.Count; i++) // lowercase 'students'
             {
                 Console.Write($"{Students[i].Name} is registered in: ");
 
-                for (int j = 0; j < Courses.Count; j++)
+                bool registeredInAnyCourse = false;
+
+                for (int j = 0; j < Courses.Count; j++) // lowercase 'courses'
                 {
                     if (registration[i, j])
                     {
                         Console.Write($"{Courses[j].CourseName}, ");
+                        registeredInAnyCourse = true;
                     }
                 }
 
+                if (!registeredInAnyCourse)
+                {
+                    Console.Write("No courses");
+                }
+
                 Console.WriteLine();
+            }
+        }
+        
+
+        public void SaveData()
+        {
+            File.WriteAllLines("Students.txt", Students.ConvertAll(s=> $"{s.ID}, {s.Name}, {s.Email}"));
+            File.WriteAllLines("Courses.txt", Courses.ConvertAll(c => $"{c.CourseID}, {c.CourseName}m{c.CreditHours}"));
+            List<string> reg = new List<string>();
+            for (int i = 0; i < Students.Count; i++)
+            {
+                for (int j = 0; j < Courses.Count; j++)
+                {
+                    if (registration[i,j])
+                    {
+                        reg.Add($"{Students[i].ID}, {Courses[j].CourseID}");
+                    }
+                }
+            }
+            File.WriteAllLines("registration.txt", reg);
+        }
+        public void LoadData()
+        {
+            try
+            {
+                if (File.Exists("Students.txt"))
+                {
+                    foreach (var line in File.ReadAllLines("Students.txt"))
+                    {
+                        var parts = line.Split(',');
+                        Students.Add(new Student(parts[1], parts[2]));
+                    }
+                }
+
+                if (File.Exists("Courses.txt"))
+                {
+                    foreach (var line in File.ReadAllLines("Courses.txt"))
+                    {
+                        var parts = line.Split(',');
+                        Courses.Add(new Courses(parts[1], int.Parse(parts[2])));
+                    }
+                }
+
+                ResizeRegistrationArray();
+
+                if (File.Exists("registrations.txt"))
+                {
+                    foreach (var line in File.ReadAllLines("registrations.txt"))
+                    {
+                        var parts = line.Split(',');
+                        int sIndex = Students.FindIndex(s => s.ID == int.Parse(parts[0]));
+                        int cIndex = Courses.FindIndex(c => c.CourseID == int.Parse(parts[1]));
+                        if (sIndex >= 0 && cIndex >= 0)
+                            registration[sIndex, cIndex] = true;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error loading data: " + e.Message);
             }
         }
     }
@@ -157,7 +225,36 @@ namespace CourseRegisteration
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            College college = new College();
+            college.LoadData();
+
+            while (true)
+            {
+                Console.WriteLine("\n--- Course Registration System ---");
+                Console.WriteLine("1. Add Student");
+                Console.WriteLine("2. Add Course");
+                Console.WriteLine("3. Register Student to Course");
+                Console.WriteLine("4. Display All Students");
+                Console.WriteLine("5. Display All Courses");
+                Console.WriteLine("6. Display Registrations");
+                Console.WriteLine("7. Save Data");
+                Console.WriteLine("8. Load Data");
+                Console.WriteLine("9. Exit");
+                Console.Write("Enter choice: ");
+
+                switch (Console.ReadLine())
+                {
+                    case "1": college.AddStudent(); break;
+                    case "2": college.AddCourse(); break;
+                    case "3": college.RegisterStudentToCourse(); break;
+                    case "4": college.DisplayAllStudents(); break;
+                    case "5": college.DisplayAllCourses(); break;
+                    case "6": college.DisplayRegistrations(); break;
+                    case "7": college.SaveData(); break;
+                    case "8": college.LoadData(); break;
+                    case "9": college.SaveData(); return;
+                }
+            }
         }
     }
 }

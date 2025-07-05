@@ -1,0 +1,15 @@
+/Users/hooman/Desktop/C# program/Program/Program/bin/Debug/net8.0/Program
+/Users/hooman/Desktop/C# program/Program/Program/bin/Debug/net8.0/Program.deps.json
+/Users/hooman/Desktop/C# program/Program/Program/bin/Debug/net8.0/Program.runtimeconfig.json
+/Users/hooman/Desktop/C# program/Program/Program/bin/Debug/net8.0/Program.dll
+/Users/hooman/Desktop/C# program/Program/Program/bin/Debug/net8.0/Program.pdb
+/Users/hooman/Desktop/C# program/Program/Program/obj/Debug/net8.0/Program.GeneratedMSBuildEditorConfig.editorconfig
+/Users/hooman/Desktop/C# program/Program/Program/obj/Debug/net8.0/Program.AssemblyInfoInputs.cache
+/Users/hooman/Desktop/C# program/Program/Program/obj/Debug/net8.0/Program.AssemblyInfo.cs
+/Users/hooman/Desktop/C# program/Program/Program/obj/Debug/net8.0/Program.csproj.CoreCompileInputs.cache
+/Users/hooman/Desktop/C# program/Program/Program/obj/Debug/net8.0/Program.sourcelink.json
+/Users/hooman/Desktop/C# program/Program/Program/obj/Debug/net8.0/Program.dll
+/Users/hooman/Desktop/C# program/Program/Program/obj/Debug/net8.0/refint/Program.dll
+/Users/hooman/Desktop/C# program/Program/Program/obj/Debug/net8.0/Program.pdb
+/Users/hooman/Desktop/C# program/Program/Program/obj/Debug/net8.0/Program.genruntimeconfig.cache
+/Users/hooman/Desktop/C# program/Program/Program/obj/Debug/net8.0/ref/Program.dll
