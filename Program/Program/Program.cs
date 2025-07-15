@@ -185,7 +185,8 @@ namespace CourseRegisteration
                     foreach (var line in File.ReadAllLines("Students.txt"))
                     {
                         var parts = line.Split(',');
-                        Students.Add(new Student(parts[1], parts[2]));
+                        if (parts.Length >= 3)
+                            Students.Add(new Student(parts[1].Trim(), parts[2].Trim()));
                     }
                 }
 
@@ -194,7 +195,8 @@ namespace CourseRegisteration
                     foreach (var line in File.ReadAllLines("Courses.txt"))
                     {
                         var parts = line.Split(',');
-                        Courses.Add(new Courses(parts[1], int.Parse(parts[2])));
+                        if (parts.Length >= 3)
+                            Courses.Add(new Courses(parts[1].Trim(), int.Parse(parts[2].Trim())));
                     }
                 }
 
@@ -202,13 +204,16 @@ namespace CourseRegisteration
 
                 if (File.Exists("registrations.txt"))
                 {
-                    foreach (var line in File.ReadAllLines("registrations.txt"))
+                    foreach (var line in File.ReadAllLines("registration.txt"))
                     {
                         var parts = line.Split(',');
-                        int sIndex = Students.FindIndex(s => s.ID == int.Parse(parts[0]));
-                        int cIndex = Courses.FindIndex(c => c.CourseID == int.Parse(parts[1]));
-                        if (sIndex >= 0 && cIndex >= 0)
-                            registration[sIndex, cIndex] = true;
+                        if (parts.Length >= 2)
+                        {
+                            int sIndex = Students.FindIndex(s => s.ID == int.Parse(parts[0].Trim()));
+                            int cIndex = Courses.FindIndex(c => c.CourseID == int.Parse(parts[1].Trim()));
+                            if (sIndex >= 0 && cIndex >= 0)
+                                registration[sIndex, cIndex] = true;
+                        }
                     }
                 }
             }
