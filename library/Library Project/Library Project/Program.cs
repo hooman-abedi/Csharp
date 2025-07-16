@@ -62,8 +62,6 @@ class Library
         
         Book newBook = new Book(title, author, isbn);
         books.Add(newBook);
-        Console.WriteLine("please enter the name of the book you want to add");
-        
         Console.WriteLine("the book added successfully");
     }
 
